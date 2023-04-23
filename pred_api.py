@@ -32,7 +32,7 @@ def read_geojson(tol: float = 0.0001, cls_id: int = 1):
     #     return gpd.GeoSeries(gdf['geometry']).simplify(tolerance=tol).to_json()
 
 
-@app.get("/read")
+@app.get("/read_fiona")
 def read_root(sta_idx: int = 0, end_idx: int = 100, req_crs: str = 'EPSG:4326'):
     # with fiona.open("Jeongeup_out_1024.gpkg") as layer:
     with fiona.open("sample2.gpkg") as layer:
