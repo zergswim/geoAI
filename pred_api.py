@@ -14,26 +14,11 @@ sim_geo = gpd.GeoSeries(gdf['geometry']).simplify(tolerance=0.0001).to_json()
 print('geoPackage file loaded')
 
 @app.get("/")
-def read_root():
-    return "Optical braille recognition Project : /docs 로 API 테스트 가능합니다."
+def root():
+    return "/docs 로 API 테스트 가능합니다."
 
-@app.get("/read_geopandas")
-def read_geopandas(sta_idx: int = 0, end_idx: int = 2):
-    # return json.loads(gdf[sta_idx:end_idx]['geometry'].to_json())
-    return json.loads(gdf[sta_idx:end_idx].to_json())
-
-@app.get("/read_geojson")
-def read_geojson(tol: float = 0.0001, cls_id: int = 1):
-    filter = (gdf['CLS_ID']==cls_id)
-    return gpd.GeoSeries(gdf[filter]['geometry']).simplify(tolerance=tol).to_json()
-    # if tol == 0.0001:
-    #     return sim_geo
-    # else:
-    #     return gpd.GeoSeries(gdf['geometry']).simplify(tolerance=tol).to_json()
-
-
-@app.get("/read_fiona")
-def read_root(sta_idx: int = 0, end_idx: int = 100, req_crs: str = 'EPSG:4326'):
+@app.get("/geo-fiona/{sta_idx}/{end_idx}")
+def read_geo_fiona(sta_idx: int = 0, end_idx: int = 100):
     # with fiona.open("Jeongeup_out_1024.gpkg") as layer:
     with fiona.open("sample2.gpkg") as layer:
         # cols = layer.schema['properties']
@@ -70,6 +55,18 @@ def read_root(sta_idx: int = 0, end_idx: int = 100, req_crs: str = 'EPSG:4326'):
         print("cnt: ", len(rtn))
             
     return {'rtn':rtn}
+
+
+@app.get("/geojson-range/{sta_idx}/{end_idx}")
+def read_geojson_range(sta_idx: int = 0, end_idx: int = 2):
+    # return json.loads(gdf[sta_idx:end_idx]['geometry'].to_json())
+    return json.loads(gdf[sta_idx:end_idx].to_json())
+
+@app.get("/geo-simlify/{tol}/{cls_id}")
+def read_geo_simlify(tol: float = 0.0001, cls_id: int = 1):
+    filter = (gdf['CLS_ID']==cls_id)
+    return gpd.GeoSeries(gdf[filter]['geometry']).simplify(tolerance=tol).to_json()
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=30001)
