@@ -17,7 +17,7 @@ print('geoPackage file loaded')
 def root():
     return "/docs 로 API 테스트 가능합니다."
 
-@app.get("/geo-fiona/{sta_idx}/{end_idx}")
+@app.get("/geo-range/{sta_idx}/{end_idx}")
 def read_geo_fiona(sta_idx: int = 0, end_idx: int = 100):
     # with fiona.open("Jeongeup_out_1024.gpkg") as layer:
     with fiona.open("sample2.gpkg") as layer:
