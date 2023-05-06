@@ -35,9 +35,10 @@ import json
 @st.cache_data
 def requestAPI_simple(tol, cls_id):
     print("requestAPI_simple:", tol, cls_id)
-    response = requests.get(f"http://localhost:30001/geojson-simplify/{tol}/{cls_id}") #, files=file, params=params)
+    response = requests.get(f"http://localhost:30001/geo-simlify/{tol}/{cls_id}") #, files=file, params=params)
+    # json_obj = response.json()
     json_obj = json.loads(response.json())
-    # print(type(json_obj), dir(json_obj))
+    print(type(json_obj), dir(json_obj))
     
     polys = []
     for p in json_obj['features']:
