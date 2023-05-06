@@ -55,7 +55,7 @@ def requestAPI_simple(tol, cls_id):
 #     return json_obj
 
 def main():
-    st.title("위성영상 재난탐지 실습")
+    st.title("불법행위 단속 실습")
     sim_lvl = st.radio("SIMPLIFY_LEVEL : ", (0.00001, 0.0001, 0.001, 0.01, 0.1), index=2, horizontal=True)
     zoom_lvl = st.slider("ZOOM_LEVEL : ", 1, 15, 8)
     cls_id = st.radio("CLS_ID : ", (1, 2, 3, 4, 5), horizontal=True)
